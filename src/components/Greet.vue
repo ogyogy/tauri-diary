@@ -5,8 +5,6 @@ import { invoke } from "@tauri-apps/api/tauri";
 const name = ref("");
 const items = ref([]);
 
-const name_ = ref("");
-
 async function greet() {
   // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
   items.value.push(await invoke("greet", { name: name.value }));
@@ -18,7 +16,6 @@ async function reload() {
 </script>
 
 <template>
-  {{ name_ }}
   <v-form @submit.prevent="greet()">
     <v-text-field v-model="name" label="Message" type="input" variant="underlined" prepend-icon="mdi-reload"
       append-icon="mdi-send" clearable @click:prepend="reload()" @click:append="greet()">
