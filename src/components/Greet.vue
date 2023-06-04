@@ -39,6 +39,8 @@ async function greet() {
   // 新しく生成したメッセージを上に表示する
   // 配列の先頭にメッセージを追加
   items.value.unshift(msg);
+  // テキストフィールドを空にする
+  text.value = "";
 }
 </script>
 
