@@ -65,9 +65,27 @@ fn greet(text: String) -> Message {
     return msg;
 }
 
-fn main() {
+fn create_table() -> Result<()> {
+    let conn = conn_db()?;
+    conn.execute(
+        // PRIMARY KEYは自動で増分されるためAUTOINCREMENTは不要
+        "CREATE TABLE IF NOT EXISTS messages (
+        id   INTEGER PRIMARY KEY,
+        text TEXT,
+        created_at INTEGER
+    )",
+        (), // empty list of parameters.
+    )?;
+    Ok(())
+}
+
+fn main() -> Result<()> {
+    create_table()?;
+
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![greet, get_messages_all])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
+
+    Ok(())
 }
